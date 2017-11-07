@@ -1,0 +1,33 @@
+import pypyodbc
+import xlwt
+
+class Connect:
+    pass
+
+
+def save_sql__data(driver, server, database, pid, uid):
+    # frist connect sql,连接数据库，获取数据库数据
+    con = pypyodbc.connect(DRIVER=driver, SERVER=server, DATABASE=database, UID=pid, PWD=uid)  #第三方库连接数据库
+    cur = con.cursor()  #获取游标指针
+    sql = '''select * from Customers_test'''
+    cur.execute(sql)  #执行sql查询语句
+    list1 = cur.fetchall()  #获取所有数据存于列表list1中
+    cur.close()
+    con.close()
+
+    # second connect excel,连接excel表，将数据存储于表格中
+    workbook = xlwt.Workbook()  #第三方库打开工作簿
+    booksheet = workbook.add_sheet('savadata_sheet')  #添加一个sheet表
+    params = ['CustomerNo', 'CustomerName', 'Address1', 'Address2', 'City', 'State', 'Zip', 'Contact', 'Phone',
+              'FedIDNo', 'DateInSystem']
+    for index in range(len(params)):
+        booksheet.write(0,index,params[index])
+    for i in range(len(list1)):
+        list2 = list1[i]
+        for j in range(len(list2)):
+            booksheet.write(i+1,j,list2[j])
+    workbook.save('practice.xls')
+
+
+if __name__ == '__main__':
+    save_sql__data('{SQL SERVER}', 'L02514', 'jdksql', 'sa', '!JDkqwe123spy107')
