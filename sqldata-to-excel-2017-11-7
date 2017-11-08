@@ -30,4 +30,4 @@ def save_sql__data(driver, server, database, pid, uid):
 
 
 if __name__ == '__main__':
-    save_sql__data('{SQL SERVER}', 'L02514', 'jdksql', 'sa', '12345678')
+    save_sql__data('{SQL SERVER}', 'L02514', 'jdksql', 'sa', '123456')
