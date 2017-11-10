@@ -1,0 +1,18 @@
+import pypyodbc
+import xlrd
+
+
+def save_excel_data(name):
+    workbook = xlrd.open_workbook(name)
+    sheet = workbook.sheet_by_index(0)
+    con = pypyodbc.connect(DRIVER='{SQL SERVER}', SERVER='localhost', DATABASE='jdksql', UID='sa', PWD='123456')
+    cur = con.cursor()
+    for index in range(sheet.nrows):
+        cur.execute("""insert into Table_2 values(?,?,?,?,?,?,?,?,?,?,?)""",sheet.row_values(index))
+        cur.commit()
+    cur.close()
+    con.close()
+
+
+if __name__ == '__main__':
+    save_excel_data('practice.xls')
