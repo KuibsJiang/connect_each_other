@@ -11,7 +11,7 @@ def save_sql__data(driver, server, database, pid, uid):
     cur = con.cursor()  #获取游标指针
     sql = '''select * from Customers_test'''
     cur.execute(sql)  #执行sql查询语句
-    list1 = cur.fetchall()  #获取所有数据存于列表list1中
+    list1 = cur.fetchall()  #获取所有数据,存于列表list1中
     cur.close()
     con.close()
 
